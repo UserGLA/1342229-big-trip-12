@@ -319,7 +319,7 @@ render(mainSortElement, createSiteSort(), `beforeend`);
 render(mainSortElement, createSiteEdit(), `beforeend`);
 render(mainSortElement, createSiteTripList(), `beforeend`);
 
-for (var i = 0; i < COUNT; i++) {
+for (let i = 0; i < COUNT; i++) {
   render(mainSortElement, createSiteTrip(), `beforeend`);
 }
 
