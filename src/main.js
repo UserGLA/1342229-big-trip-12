@@ -1,7 +1,7 @@
 'use strict';
 const COUNT = 3;
 
-const createSiteInfo = () => {
+const createTripInfo = () => {
   return (
 
     `<section class="trip-main__trip-info  trip-info">
@@ -11,14 +11,21 @@ const createSiteInfo = () => {
           <p class="trip-info__dates">Mar 18&nbsp;&mdash;&nbsp;20</p>
         </div>
 
-        <p class="trip-info__cost">
-          Total: &euro;&nbsp;<span class="trip-info__cost-value">1230</span>
-        </p>
+
       </section>`
   );
 };
 
-const createSiteMenu = () => {
+const createTripInfoTotal = () => {
+  return (
+
+    `<p class="trip-info__cost">
+          Total: &euro;&nbsp;<span class="trip-info__cost-value">1230</span>
+        </p>`
+  );
+};
+
+const createTripMenu = () => {
   return (
     `<nav class="trip-controls__trip-tabs  trip-tabs">
        <a class="trip-tabs__btn  trip-tabs__btn--active" href="#">Table</a>
@@ -27,7 +34,7 @@ const createSiteMenu = () => {
   );
 };
 
-const createSiteFilters = () => {
+const createTripFilters = () => {
   return (
     `<form class="trip-filters" action="#" method="get">
               <div class="trip-filters__filter">
@@ -51,7 +58,7 @@ const createSiteFilters = () => {
   );
 };
 
-const createSiteSort = () => {
+const createTripSort = () => {
   return (
     `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
             <span class="trip-sort__item  trip-sort__item--day">Day</span>
@@ -87,7 +94,7 @@ const createSiteSort = () => {
   );
 };
 
-const createSiteEdit = () => {
+const createEventEdit = () => {
   return (
     `<form class="trip-events__item  event  event--edit" action="#" method="post">
             <header class="event__header">
@@ -163,7 +170,7 @@ const createSiteEdit = () => {
                 <label class="event__label  event__type-output" for="event-destination-1">
                   Flight to
                 </label>
-                <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="" list="destination-list-1">
+                <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="Geneva" list="destination-list-1">
                 <datalist id="destination-list-1">
                   <option value="Amsterdam"></option>
                   <option value="Geneva"></option>
@@ -246,59 +253,76 @@ const createSiteEdit = () => {
                   </div>
                 </div>
               </section>
+
+              <section class="event__section  event__section--destination">
+                <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+                <p class="event__destination-description">Geneva is a city in Switzerland that lies at the southern tip of expansive Lac Léman (Lake Geneva). Surrounded by the Alps and Jura mountains, the city has views of dramatic Mont Blanc.</p>
+
+                <div class="event__photos-container">
+                  <div class="event__photos-tape">
+                    <img class="event__photo" src="img/photos/1.jpg" alt="Event photo">
+                    <img class="event__photo" src="img/photos/2.jpg" alt="Event photo">
+                    <img class="event__photo" src="img/photos/3.jpg" alt="Event photo">
+                    <img class="event__photo" src="img/photos/4.jpg" alt="Event photo">
+                    <img class="event__photo" src="img/photos/5.jpg" alt="Event photo">
+                  </div>
+                </div>
+              </section>
             </section>
           </form>`
 
   );
 };
 
-const createSiteTripList = () => {
+const createSiteTripDays = () => {
   return (
-    `<ul class="trip-events__list">`
-  );
-};
 
-const createSiteTrip = () => {
-  return (
-    `<li class="trip-events__item">
+    `<ul class="trip-days">
+            <li class="trip-days__item  day">
+              <div class="day__info">
+                <span class="day__counter">1</span>
+                <time class="day__date" datetime="2019-03-18">MAR 18</time>
+              </div>
+
+              <ul class="trip-events__list">
+                <li class="trip-events__item">
                   <div class="event">
                     <div class="event__type">
-                      <img class="event__type-icon" width="42" height="42" src="img/icons/sightseeing.png" alt="Event type icon">
+                      <img class="event__type-icon" width="42" height="42" src="img/icons/taxi.png" alt="Event type icon">
                     </div>
-                    <h3 class="event__title">Sightseeing in Chamonix</h3>
+                    <h3 class="event__title">Taxi to Amsterdam</h3>
 
                     <div class="event__schedule">
                       <p class="event__time">
-                        <time class="event__start-time" datetime="2019-03-19T11:20">14:20</time>
+                        <time class="event__start-time" datetime="2019-03-18T10:30">10:30</time>
                         &mdash;
-                        <time class="event__end-time" datetime="2019-03-19T13:00">13:00</time>
+                        <time class="event__end-time" datetime="2019-03-18T11:00">11:00</time>
                       </p>
-                      <p class="event__duration">1H 20M</p>
+                      <p class="event__duration">30M</p>
                     </div>
 
                     <p class="event__price">
-                      &euro;&nbsp;<span class="event__price-value">50</span>
+                      &euro;&nbsp;<span class="event__price-value">20</span>
                     </p>
 
                     <h4 class="visually-hidden">Offers:</h4>
                     <ul class="event__selected-offers">
                       <li class="event__offer">
-                        <span class="event__offer-title">Book tickets</span>
+                        <span class="event__offer-title">Order Uber</span>
                         &plus;
-                        &euro;&nbsp;<span class="event__offer-price">40</span>
+                        &euro;&nbsp;<span class="event__offer-price">20</span>
                        </li>
-                       <li class="event__offer">
-                         <span class="event__offer-title">Lunch in city</span>
-                         &plus;
-                         &euro;&nbsp;<span class="event__offer-price">30</span>
-                        </li>
                     </ul>
 
                     <button class="event__rollup-btn" type="button">
                       <span class="visually-hidden">Open event</span>
                     </button>
                   </div>
-                </li>`
+                </li>
+              </ul>
+            </li>
+          </ul>`
+
   );
 };
 
@@ -307,20 +331,23 @@ const render = (container, template, place) => {
 };
 
 const headerMainElement = document.querySelector(`.trip-main`);
-render(headerMainElement, createSiteInfo(), `afterbegin`);
+render(headerMainElement, createTripInfo(), `afterbegin`);
+
+const headerMainElementTotal = headerMainElement.querySelector(`.trip-main__trip-info`);
+render(headerMainElementTotal, createTripInfoTotal(), `beforeend`);
+
 
 const headerMenuElement = headerMainElement.querySelector(`.trip-controls`);
-render(headerMenuElement, createSiteMenu(), `afterbegin`);
+render(headerMenuElement, createTripMenu(), `afterbegin`);
 
-render(headerMenuElement, createSiteFilters(), `beforeend`);
+render(headerMenuElement, createTripFilters(), `beforeend`);
 
 const mainSortElement = document.querySelector(`.trip-events`);
-render(mainSortElement, createSiteSort(), `beforeend`);
-render(mainSortElement, createSiteEdit(), `beforeend`);
-render(mainSortElement, createSiteTripList(), `beforeend`);
+render(mainSortElement, createTripSort(), `beforeend`);
+render(mainSortElement, createEventEdit(), `beforeend`);
 
 for (let i = 0; i < COUNT; i++) {
-  render(mainSortElement, createSiteTrip(), `beforeend`);
+  render(mainSortElement, createSiteTripDays(), `beforeend`);
 }
 
 
