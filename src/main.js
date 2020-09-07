@@ -20,11 +20,36 @@ import {createTripDaysItem} from "./view/trip-daysItem.js";
 
 import {createTripEvent} from "./view/trip-event.js";
 
+/*
+import {events} from "./mock/event.js";
+*/
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
 
+/*
+const createElement = (template) => {
+  const element = document.createElement(`div`);
+  element.innerHTML = template;
+
+  return element.firstChild;
+};
+
+
+const renderElement = (container, component, place) => {
+  switch (place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(component.createElement());
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(component);
+      break;
+  }
+};
+
+const dates = [...new Set(events.map((item) => new Date(item.startDate).toDateString()))];
+*/
 const headerMainElement = document.querySelector(`.trip-main`);
 render(headerMainElement, createTripInfo(), `afterbegin`);
 
@@ -53,3 +78,16 @@ const tripDaysItem = mainSortElement.querySelector(`.trip-events__list`);
 for (let i = 0; i < COUNT; i++) {
   render(tripDaysItem, createTripEvent(), `beforeend`);
 }
+/*
+dates.forEach((date, dateIndex) => {
+  const day = createElement(createTripDays(new Date(date), dateIndex + 1));
+
+  events
+    .filter((_event) => new Date(_event.startDate).toDateString() === date)
+    .forEach((_event, eventIndex) => {
+      renderElement(day.querySelector(`.trip-events__list`), createTripEvent(_event));
+    });
+});
+*/
+
+
