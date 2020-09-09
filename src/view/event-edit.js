@@ -1,11 +1,19 @@
-export const createEventEdit = () => {
+export const createEventEdit = (event) => {
+  const {city, point, startTime, endTime} = event;
+
+  const formatDate = (date) => {
+    const month = new Date(date).getMonth() + 1;
+    const day = new Date(date).getDate().toString();
+    const year = new Date(date).getFullYear().toString().substr(-2);
+    return day + `/` + month + `/` + year;
+  };
   return (
     `<form class="trip-events__item  event  event--edit" action="#" method="post">
             <header class="event__header">
               <div class="event__type-wrapper">
                 <label class="event__type  event__type-btn" for="event-type-toggle-1">
                   <span class="visually-hidden">Choose event type</span>
-                  <img class="event__type-icon" width="17" height="17" src="img/icons/flight.png" alt="Event type icon">
+                  <img class="event__type-icon" width="17" height="17" src="img/icons/${point.toLowerCase()}.png" alt="Event type icon">
                 </label>
                 <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -72,9 +80,9 @@ export const createEventEdit = () => {
 
               <div class="event__field-group  event__field-group--destination">
                 <label class="event__label  event__type-output" for="event-destination-1">
-                  Flight to
+                  ${point} to
                 </label>
-                <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="Geneva" list="destination-list-1">
+                <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
                 <datalist id="destination-list-1">
                   <option value="Amsterdam"></option>
                   <option value="Geneva"></option>
@@ -87,12 +95,12 @@ export const createEventEdit = () => {
                 <label class="visually-hidden" for="event-start-time-1">
                   From
                 </label>
-                <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="18/03/19 00:00">
+                <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${formatDate(event.startDate)} ${startTime}">
                 &mdash;
                 <label class="visually-hidden" for="event-end-time-1">
                   To
                 </label>
-                <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="18/03/19 00:00">
+                <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${formatDate(event.endDate)} ${endTime}">
               </div>
 
               <div class="event__field-group  event__field-group--price">
@@ -160,15 +168,11 @@ export const createEventEdit = () => {
 
               <section class="event__section  event__section--destination">
                 <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                <p class="event__destination-description">Geneva is a city in Switzerland that lies at the southern tip of expansive Lac Léman (Lake Geneva). Surrounded by the Alps and Jura mountains, the city has views of dramatic Mont Blanc.</p>
+                <p class="event__destination-description">${event.description}</p>
 
                 <div class="event__photos-container">
                   <div class="event__photos-tape">
-                    <img class="event__photo" src="img/photos/1.jpg" alt="Event photo">
-                    <img class="event__photo" src="img/photos/2.jpg" alt="Event photo">
-                    <img class="event__photo" src="img/photos/3.jpg" alt="Event photo">
-                    <img class="event__photo" src="img/photos/4.jpg" alt="Event photo">
-                    <img class="event__photo" src="img/photos/5.jpg" alt="Event photo">
+                    <img class="event__photo" src=${event.photo} alt="Event photo">
                   </div>
                 </div>
               </section>

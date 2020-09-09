@@ -6,7 +6,7 @@ export const TYPEPOINTS = [
   `Transport`,
   `Drive`,
   `Flight`,
-  `Check`,
+  `Check-in`,
   `Sightseeing`,
   `Restaurant`
 ];

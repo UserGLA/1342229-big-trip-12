@@ -1,10 +1,7 @@
-const AMOUNT_EVENT = 10;
+const AMOUNT_EVENT = 20;
 
-import {getRandomInteger} from "./util.js";
-import {TYPEPOINTS} from "./mock.js";
-import {CITES} from "./mock.js";
-import {DESCRIPTIONS} from "./mock.js";
-import {OFFERS} from "./mock.js";
+import {getRandomInteger} from "..//utils.js";
+import {TYPEPOINTS, CITES, DESCRIPTIONS, OFFERS} from "./mock.js";
 
 const generatePoint = () => {
   const randomPoint = getRandomInteger(0, TYPEPOINTS.length - 1);
@@ -27,12 +24,11 @@ const generateDate = () => {
   return (Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * getRandomInteger(0, 60) * 60 * 1000);
 };
 
-const startTime = [getRandomInteger(0, 22), getRandomInteger(10, 59)];
-const endTime = [startTime[0] + 1, getRandomInteger(10, 59)];
-
 const generateEvent = () => {
   const startDate = generateDate();
   const endDate = generateDate();
+  const startTime = [getRandomInteger(0, 22), getRandomInteger(10, 59)];
+  const endTime = [startTime[0] + 1, getRandomInteger(10, 59)];
   return {
     point: generatePoint(),
     city: generateCity(),
@@ -42,7 +38,7 @@ const generateEvent = () => {
     startDate: Math.min(startDate, endDate),
     endDate: Math.max(startDate, endDate),
     price: getRandomInteger(10, 100),
-    offer: OFFERS,
+    offers: OFFERS,
     photo: generatePhotos()
   };
 };
