@@ -1,55 +1,36 @@
-const COUNT = 3;
-
 import {createTripInfo} from "./view/trip-info.js";
-
 import {createTripInfoTotal} from "./view/trip-infoTotal.js";
-
 import {createTripMenu} from "./view/trip-menu.js";
-
 import {createTripFilters} from "./view/trip-filters.js";
-
 import {createTripSort} from "./view/trip-sort.js";
-
+import {createTripDaysList} from "./view/trip-daysList.js";
+import {createTripDay} from "./view/trip-day.js";
+import {createTripEvent} from "./view/trip-event.js";
 import {createEventEdit} from "./view/event-edit.js";
 
-import {createTripDaysList} from "./view/trip-daysList.js";
+import {events} from "./mock/event.js";
+import {renderElement, createElement, RenderPosition} from "./utils.js";
 
-import {createTripDays} from "./view/trip-days.js";
-
-import {createTripDaysItem} from "./view/trip-daysItem.js";
-
-import {createTripEvent} from "./view/trip-event.js";
-
-
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
+const dates = [...new Set(events.map((item) => new Date(item.startDate).toDateString()))];
 
 const headerMainElement = document.querySelector(`.trip-main`);
-render(headerMainElement, createTripInfo(), `afterbegin`);
 
-const headerMainElementTotal = headerMainElement.querySelector(`.trip-main__trip-info`);
-render(headerMainElementTotal, createTripInfoTotal(), `beforeend`);
+renderElement(headerMainElement, createElement(createTripInfo()), RenderPosition.AFTERBEGIN);
+renderElement(headerMainElement.querySelector(`.trip-main__trip-info`), createElement(createTripInfoTotal()), RenderPosition.BEFOREEND);
+renderElement(headerMainElement.querySelector(`.trip-controls`), createElement(createTripMenu()), RenderPosition.AFTERBEGIN);
+renderElement(headerMainElement.querySelector(`.trip-controls`), createElement(createTripFilters()), RenderPosition.BEFOREEND);
+renderElement(document.querySelector(`.trip-events`), createElement(createTripSort()), RenderPosition.BEFOREEND);
+renderElement(document.querySelector(`.trip-events`), createElement(createTripDaysList()), RenderPosition.BEFOREEND);
 
-
-const headerMenuElement = headerMainElement.querySelector(`.trip-controls`);
-render(headerMenuElement, createTripMenu(), `afterbegin`);
-
-render(headerMenuElement, createTripFilters(), `beforeend`);
-
-const mainSortElement = document.querySelector(`.trip-events`);
-render(mainSortElement, createTripSort(), `beforeend`);
-render(mainSortElement, createEventEdit(), `beforeend`);
-render(mainSortElement, createTripDaysList(), `beforeend`);
-
-const tripDaysListElement = mainSortElement.querySelector(`.trip-days`);
-render(tripDaysListElement, createTripDays(), `beforeend`);
-
-const tripDaysElement = mainSortElement.querySelector(`.trip-days__item`);
-render(tripDaysElement, createTripDaysItem(), `beforeend`);
-
-const tripDaysItem = mainSortElement.querySelector(`.trip-events__list`);
-
-for (let i = 0; i < COUNT; i++) {
-  render(tripDaysItem, createTripEvent(), `beforeend`);
-}
+dates.forEach((date, dateIndex) => {
+  const day = createElement(createTripDay(new Date(date), dateIndex + 1));
+  events
+    .filter((_event) => new Date(_event.startDate).toDateString() === date)
+    .forEach((_event, eventIndex) => {
+      if (eventIndex === 0 && dateIndex === 0) {
+        renderElement(day.querySelector(`.trip-events__list`), createElement(createEventEdit(_event)), RenderPosition.AFTERBEGIN);
+      }
+      renderElement(day.querySelector(`.trip-events__list`), createElement(createTripEvent(_event)), RenderPosition.BEFOREEND);
+    });
+  renderElement(document.querySelector(`.trip-days`), day, RenderPosition.BEFOREEND);
+});
