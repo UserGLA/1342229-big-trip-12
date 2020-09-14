@@ -27,3 +27,4 @@ export const renderElement = (container, component, place) => {
       break;
   }
 };
+

@@ -1,5 +1,7 @@
-export const createEventEdit = (event) => {
-  const {city, point, startTime, endTime} = event;
+import {createElement} from "../utils.js";
+
+const createEventEdit = (_event) => {
+  const {city, point, startTime, endTime} = _event;
 
   const formatDate = (date) => {
     const month = new Date(date).getMonth() + 1;
@@ -95,12 +97,12 @@ export const createEventEdit = (event) => {
                 <label class="visually-hidden" for="event-start-time-1">
                   From
                 </label>
-                <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${formatDate(event.startDate)} ${startTime}">
+                <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${formatDate(_event.startDate)} ${startTime}">
                 &mdash;
                 <label class="visually-hidden" for="event-end-time-1">
                   To
                 </label>
-                <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${formatDate(event.endDate)} ${endTime}">
+                <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${formatDate(_event.endDate)} ${endTime}">
               </div>
 
               <div class="event__field-group  event__field-group--price">
@@ -168,11 +170,11 @@ export const createEventEdit = (event) => {
 
               <section class="event__section  event__section--destination">
                 <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                <p class="event__destination-description">${event.description}</p>
+                <p class="event__destination-description">${_event.description}</p>
 
                 <div class="event__photos-container">
                   <div class="event__photos-tape">
-                    <img class="event__photo" src=${event.photo} alt="Event photo">
+                    <img class="event__photo" src=${_event.photo} alt="Event photo">
                   </div>
                 </div>
               </section>
@@ -181,3 +183,26 @@ export const createEventEdit = (event) => {
 
   );
 };
+
+export default class EventEdit {
+  constructor(_event) {
+    this._event = _event;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createEventEdit(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

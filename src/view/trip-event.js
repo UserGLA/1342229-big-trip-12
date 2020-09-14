@@ -1,5 +1,7 @@
-export const createTripEvent = (event) => {
-  const {city, price, point, startTime, endTime, offers} = event;
+import {createElement} from "../utils.js";
+
+const createTripEvent = (_event) => {
+  const {city, price, point, startTime, endTime, offers} = _event;
   return (
 
     `<li class="trip-events__item">
@@ -32,7 +34,7 @@ export const createTripEvent = (event) => {
           </li>`;
     }).slice(0, 3).join(``)
     }
-        
+
       </ul>
 
       <button class="event__rollup-btn" type="button">
@@ -43,3 +45,26 @@ export const createTripEvent = (event) => {
 
   );
 };
+
+export default class TripEvent {
+  constructor(_event) {
+    this._event = _event;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTripEvent(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
