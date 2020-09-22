@@ -13,7 +13,7 @@ import EventEdit from "./view/event-edit.js";
 import NoEvent from "./view/no-event.js";
 
 import {events} from "./mock/event.js";
-import {renderElement, RenderPosition} from "./utils.js";
+import {renderElement, RenderPosition, replace} from "./utils/render.js";
 
 const dates = [...new Set(events.map((item) => new Date(item.startDate).toDateString()))];
 
@@ -28,42 +28,38 @@ const renderEvent = (eventElement, _event) => {
     }
   };
   const replaceCardToForm = () => {
-    eventElement.replaceChild(eventEditComponent.getElement(), eventComponent.getElement());
+    replace(eventEditComponent, eventComponent);
   };
 
   const replaceFormToCard = () => {
-    eventElement.replaceChild(eventComponent.getElement(), eventEditComponent.getElement());
+    replace(eventComponent, eventEditComponent);
   };
 
-  eventComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
+  eventComponent.setEditClickHandler(() => {
     replaceCardToForm();
     document.addEventListener(`keydown`, onEscKeyDown);
   });
 
-  eventEditComponent.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, () => {
-    replaceFormToCard();
-    document.addEventListener(`keydown`, onEscKeyDown);
-  });
-  eventEditComponent.getElement().querySelector(`.event__save-btn`).addEventListener(`click`, () => {
+  eventEditComponent.setFormSubmitHandler(() => {
     replaceFormToCard();
     document.addEventListener(`keydown`, onEscKeyDown);
   });
 
-  renderElement(eventElement, eventComponent.getElement(), RenderPosition.BEFOREEND);
+  renderElement(eventElement, eventComponent, RenderPosition.BEFOREEND);
 };
 
 const headerMainElement = document.querySelector(`.trip-main`);
 
-renderElement(headerMainElement, new TripInfo().getElement(), RenderPosition.AFTERBEGIN);
-renderElement(headerMainElement.querySelector(`.trip-main__trip-info`), new TripInfoTotal().getElement(), RenderPosition.BEFOREEND);
-renderElement(headerMainElement.querySelector(`.trip-controls`), new TripMenu().getElement(), RenderPosition.AFTERBEGIN);
-renderElement(headerMainElement.querySelector(`.trip-controls`), new TripFilters().getElement(), RenderPosition.BEFOREEND);
-renderElement(document.querySelector(`.trip-events`), new TripSort().getElement(), RenderPosition.BEFOREEND);
+renderElement(headerMainElement, new TripInfo(), RenderPosition.AFTERBEGIN);
+renderElement(headerMainElement.querySelector(`.trip-main__trip-info`), new TripInfoTotal(), RenderPosition.BEFOREEND);
+renderElement(headerMainElement.querySelector(`.trip-controls`), new TripMenu(), RenderPosition.AFTERBEGIN);
+renderElement(headerMainElement.querySelector(`.trip-controls`), new TripFilters(), RenderPosition.BEFOREEND);
+renderElement(document.querySelector(`.trip-events`), new TripSort(), RenderPosition.BEFOREEND);
 
 if (events.length === 0) {
-  renderElement(document.querySelector(`.trip-events`), new NoEvent().getElement(), RenderPosition.BEFOREEND);
+  renderElement(document.querySelector(`.trip-events`), new NoEvent(), RenderPosition.BEFOREEND);
 } else {
-  renderElement(document.querySelector(`.trip-events`), new TripDaysList().getElement(), RenderPosition.BEFOREEND);
+  renderElement(document.querySelector(`.trip-events`), new TripDaysList(), RenderPosition.BEFOREEND);
 }
 
 dates.forEach((date, dateIndex) => {

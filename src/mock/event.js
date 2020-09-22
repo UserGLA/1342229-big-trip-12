@@ -1,6 +1,6 @@
-const AMOUNT_EVENT = 20;
+const AMOUNT_EVENT = 5;
 
-import {getRandomInteger} from "..//utils.js";
+import {getRandomInteger} from "..//utils/common.js";
 import {TYPEPOINTS, CITES, DESCRIPTIONS, OFFERS} from "./mock.js";
 
 const generatePoint = () => {

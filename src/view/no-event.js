@@ -1,4 +1,7 @@
-import {createElement} from "../utils.js";
+/*
+import {createElement} from "../utils/render.js";
+*/
+import Abstract from "./abstract.js";
 
 const createNoEvent = () => {
   return (
@@ -116,24 +119,8 @@ const createNoEvent = () => {
   );
 };
 
-export default class NoEvent {
-  constructor() {
-    this._element = null;
-  }
-
+export default class NoEvent extends Abstract {
   getTemplate() {
     return createNoEvent();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

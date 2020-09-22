@@ -1,4 +1,7 @@
-import {createElement} from "../utils.js";
+/*
+import {createElement} from "../utils/render.js";
+*/
+import Abstract from "./abstract.js";
 
 const createTripDay = (data, index) => {
   return (
@@ -12,26 +15,14 @@ const createTripDay = (data, index) => {
   );
 };
 
-export default class TripDay {
+export default class TripDay extends Abstract {
   constructor(date, dateIndex) {
+    super();
     this.date = date;
     this.dateIndex = dateIndex;
-    this._element = null;
   }
 
   getTemplate() {
     return createTripDay(this.date, this.dateIndex);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

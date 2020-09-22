@@ -1,4 +1,7 @@
-import {createElement} from "../utils.js";
+/*
+import {createElement} from "../utils/render.js";
+*/
+import Abstract from "./abstract.js";
 
 const createEventEdit = (_event) => {
   const {city, point, startTime, endTime} = _event;
@@ -185,25 +188,22 @@ const createEventEdit = (_event) => {
   );
 };
 
-export default class EventEdit {
+export default class EventEdit extends Abstract {
   constructor(_event) {
+    super();
     this._event = _event;
-    this._element = null;
+    this._formSubmitHandler = this._formSubmitHandler.bind(this);
   }
 
   getTemplate() {
     return createEventEdit(this._event);
   }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _formSubmitHandler(evt) {
+    evt.preventDefault();
+    this._callback.formSubmit();
   }
-
-  removeElement() {
-    this._element = null;
+  setFormSubmitHandler(callback) {
+    this._callback.formSubmit = callback;
+    this.getElement().querySelector(`.event__save-btn`).addEventListener(`submit`, this._formSubmitHandler);
   }
 }
