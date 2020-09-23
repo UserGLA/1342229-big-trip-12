@@ -1,4 +1,4 @@
-const AMOUNT_EVENT = 5;
+const AMOUNT_EVENT = 20;
 
 import {getRandomInteger} from "..//utils/common.js";
 import {TYPEPOINTS, CITES, DESCRIPTIONS, OFFERS} from "./mock.js";

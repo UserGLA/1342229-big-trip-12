@@ -1,45 +1,54 @@
-import TripMenu from "../view/trip-menu.js";
-import TripInfo from "../view/trip-info.js";
-import TripInfoTotal from "../view/trip-infoTotal.js";
-import TripFilters from "../view/trip-filters.js";
 import TripSort from "../view/trip-sort.js";
 import TripDaysList from "../view/trip-daysList.js";
 import TripEvent from "../view/trip-event.js";
-/*
-import EventNew from "../view/event-new.js";
 import TripDay from "../view/trip-day.js";
-*/
 import EventEdit from "../view/event-edit.js";
 import NoEvent from "../view/no-event.js";
 
 import {renderElement, RenderPosition, replace} from "../utils/render.js";
 
 export default class Trip {
-  constuctor(tripContainer) {
+  constructor(tripContainer) {
     this._tripContainer = tripContainer;
-    this._TripMenuComponent = new TripMenu();
-    this._TripInfoComponent = new TripInfo();
-    this._TripInfoTotalComponent = new TripInfoTotal();
-    this._TripFiltersComponent = new TripFilters();
     this._TripSortComponent = new TripSort();
     this._TripDaysListComponent = new TripDaysList();
     this._NoEventComponent = new NoEvent();
+
+    this._events = null;
   }
 
-  init(listEvents) {
-    this._listEvents = listEvents.slice();
-    renderElement(this._tripContainer, this.__TripMenuComponent, RenderPosition.BEFOREEND);
-    renderElement(this._tripContainer, this._TripInfoComponent, RenderPosition.BEFOREEND);
-    renderElement(this._tripContainer, this._TripInfoTotalComponent, RenderPosition.BEFOREEND);
-    renderElement(this._tripContainer, this._TripFiltersComponent, RenderPosition.BEFOREEND);
+  init(events) {
+    if (events.length === 0) {
+      renderElement(this._tripContainer, new NoEvent(), RenderPosition.BEFOREEND);
+      return;
+    }
+    this._events = events.slice();
+    this._renderSort();
     renderElement(this._tripContainer, this._TripDaysListComponent, RenderPosition.BEFOREEND);
-    this._renderTrip();
+    this._renderTrip(events);
   }
 
   _renderSort() {
     renderElement(this._tripContainer, this._TripSortComponent, RenderPosition.BEFOREEND);
   }
-  _renderEvents(_event) {
+
+  _renderTrip(events) {
+    const dates = [...new Set(events.map((item) => new Date(item.startDate).toDateString()))];
+
+    dates.forEach((date, dateIndex) => {
+      const day = new TripDay(new Date(date), dateIndex + 1).getElement();
+      events
+        .filter((_event) => new Date(_event.startDate).toDateString() === date)
+        .forEach((_event) => {
+
+          this._renderEvent(day.querySelector(`.trip-events__list`), _event);
+        });
+      renderElement(this._TripDaysListComponent, day, RenderPosition.BEFOREEND);
+    });
+
+  }
+
+  _renderEvent(container, _event) {
     const eventComponent = new TripEvent(_event);
     const eventEditComponent = new EventEdit(_event);
     const onEscKeyDown = (evt) => {
@@ -66,7 +75,7 @@ export default class Trip {
       replaceFormToCard();
       document.addEventListener(`keydown`, onEscKeyDown);
     });
-    renderElement(this.__TripDaysListComponent, eventComponent, RenderPosition.BEFOREEND);
+    renderElement(container, eventComponent, RenderPosition.BEFOREEND);
   }
   _renderNoEvents() {
     renderElement(this._tripContainer, this.__NoEventComponent, RenderPosition.BEFOREEND);

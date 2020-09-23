@@ -1,6 +1,3 @@
-/*
-import {createElement} from "../utils/render.js";
-*/
 import Abstract from "./abstract.js";
 
 const createEventEdit = (_event) => {
@@ -204,6 +201,6 @@ export default class EventEdit extends Abstract {
   }
   setFormSubmitHandler(callback) {
     this._callback.formSubmit = callback;
-    this.getElement().querySelector(`.event__save-btn`).addEventListener(`submit`, this._formSubmitHandler);
+    this.getElement().addEventListener(`submit`, this._formSubmitHandler);
   }
 }

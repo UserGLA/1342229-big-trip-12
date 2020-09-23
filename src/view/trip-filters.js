@@ -1,6 +1,3 @@
-/*
-import {createElement} from "../utils/render.js";
-*/
 import Abstract from "./abstract.js";
 
 const createTripFilters = () => {
