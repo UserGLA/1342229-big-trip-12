@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import Abstract from "./abstract.js";
 
 const createEventNew = (_event) => {
   const {city, point, startTime, endTime} = _event;
@@ -180,29 +180,16 @@ const createEventNew = (_event) => {
               </section>
             </section>
           </form>`
-
   );
 };
 
-export default class EventNew {
+export default class EventNew extends Abstract {
   constructor(_event) {
+    super();
     this._event = _event;
-    this._element = null;
   }
 
   getTemplate() {
     return createEventNew(this._event);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
